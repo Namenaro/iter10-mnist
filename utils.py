@@ -40,7 +40,7 @@ def get_coords_for_radius(centerx, centery, radius):
     return X,Y
 
 def find_best_hypothesys(dict_hypotheses):
-    sorted_hypos = sorted(dict_hypotheses, key=operator.itemgetter(1))
+    sorted_hypos = sorted(dict_hypotheses, key=operator.itemgetter(1), reverse=True)
     best_hypo = sorted_hypos[0]
     dx= best_hypo[0]
     dy = best_hypo[1]
@@ -49,7 +49,7 @@ def find_best_hypothesys(dict_hypotheses):
 
 
 def show_several_pics_with_one_colorbar(pics):
-    rows = 1
+    rows = 2
     fig, axs = plt.subplots(rows, len(pics))
     MIN, MAX = np.array(pics).min(), np.array(pics).max()
     for i in range(len(pics)):

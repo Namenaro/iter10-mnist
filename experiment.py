@@ -13,11 +13,11 @@ from A import *
 def init_A_and_all_hypos(pic):
     X, Y = select_coord_on_pic(pic)
     checker = check_mean
-    side = 4
+    side = 1
     pics_for_stat = get_diverse_set_of_numbers(20)
     A = init_descriptor(pic, X[0], Y[0], side, checker, pics_for_stat)
 
-    radius = 5
+    radius = 1
     hypotheses_list = []
     for i in range(1, len(X)):
         descriptor = init_descriptor(pic, X[i], Y[i], side, checker, pics_for_stat)

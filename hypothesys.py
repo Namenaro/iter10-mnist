@@ -14,13 +14,12 @@ class Hypothesys:
         X, Y = get_coords_less_or_eq_raduis(expected_x, expected_y, self.radius)
         temporary_hypotheses = {}
         for i in range(len(X)):
-            normed_popravka = self.A.apply(pic, X[i], Y[i])
+            alignment = self.A.apply(pic, X[i], Y[i])
             ddx = X[i]-expected_x
             ddy = Y[i]-expected_y
-            temporary_hypotheses[(ddx, ddy)] = normed_popravka
+            temporary_hypotheses[(ddx, ddy)] = alignment
 
-        normed_popravka, ddx, ddy = find_best_hypothesys(temporary_hypotheses)
-        alignment = 1-normed_popravka
+        alignment, ddx, ddy = find_best_hypothesys(temporary_hypotheses)
         return alignment, ddx ,ddy
 
     def apply_to_all_pic(self, pic):
@@ -30,8 +29,8 @@ class Hypothesys:
         res = np.zeros((ymax, xmax))
         for centery in range(0, ymax):
             for centerx in range(0, xmax):
-                val = self.check_hypothesys(pic, centerx, centery)
-                res[centery, centerx] = val
+                alignment, ddx ,ddy = self.check_hypothesys(pic, centerx, centery)
+                res[centery, centerx] = alignment
         return res
 
 
