@@ -1,5 +1,6 @@
 import operator
 import numpy as np
+import matplotlib.pyplot as plt
 
 def get_sensory_array(pic, centerx, centery, radius):
     XB, YB = get_coords_less_or_eq_raduis(centerx, centery, radius)
@@ -45,3 +46,14 @@ def find_best_hypothesys(dict_hypotheses):
     dy = best_hypo[1]
     val = dict_hypotheses[best_hypo]
     return val, dx, dy
+
+
+def show_several_pics_with_one_colorbar(pics):
+    rows = 1
+    fig, axs = plt.subplots(rows, len(pics))
+    MIN, MAX = np.array(pics).min(), np.array(pics).max()
+    for i in range(len(pics)):
+        im = axs[0, i].imshow(pics[i], cmap='Blues', vmin=MIN, vmax=MAX)
+
+    fig.colorbar(im, ax=axs.ravel().tolist())
+    plt.show()
