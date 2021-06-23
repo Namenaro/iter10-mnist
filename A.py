@@ -7,14 +7,14 @@ class Descriptor:
         self.checker = checker
         self.side = side
         self.etalon_val = None
-        self.mean = None
-        self.std = None
+        self.max = None
+
 
     def apply(self, pic, x, y):
         sensory_array = get_sensory_array(pic, x, y, self.side)
         value = self.checker(sensory_array)
         abs_popravka = abs(self.etalon_val - value)
-        normed_popravka =  (abs_popravka - self.mean) / self.std
+        normed_popravka =abs_popravka/self.max
         return normed_popravka
 
     def apply_to_pic(self, pic):
@@ -33,7 +33,7 @@ def count_rescaling_coeff_for_popravka(descriptor, pics_for_stat):
     for pic in pics_for_stat:
         res.append(descriptor.apply_to_pic(pic).flatten())
     res = np.array(res)
-    return np.mean(res), np.std(res)
+    return np.max(res)
 
 def init_descriptor(etalon, x, y, side, checker, pics_for_stat):
     A = Descriptor(side, checker)

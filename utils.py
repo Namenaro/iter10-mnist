@@ -1,4 +1,4 @@
-
+import operator
 import numpy as np
 
 def get_sensory_array(pic, centerx, centery, radius):
@@ -38,3 +38,10 @@ def get_coords_for_radius(centerx, centery, radius):
         Y.append(y+centery)
     return X,Y
 
+def find_best_hypothesys(dict_hypotheses):
+    sorted_hypos = sorted(dict_hypotheses, key=operator.itemgetter(1))
+    best_hypo = sorted_hypos[0]
+    dx= best_hypo[0]
+    dy = best_hypo[1]
+    val = dict_hypotheses[best_hypo]
+    return val, dx, dy
