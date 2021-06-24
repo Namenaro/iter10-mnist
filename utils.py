@@ -55,5 +55,12 @@ def show_several_pics_with_one_colorbar(pics):
         im = axs[0, i].imshow(pics[i], cmap='Blues', vmin=MIN, vmax=MAX)
 
     fig.colorbar(im, ax=axs.ravel().tolist())
-    plt.show()
+    return fig
+
+def visualise_points_on_fig(pic, X,Y):
+    fig, ax = plt.subplots()
+    plt.imshow(pic, cmap='gray_r')
+    plt.scatter(X[0], Y[0], s=100, c='red', marker='o', alpha=0.4)
+    plt.scatter(X[1:], Y[1:], s=100, c='green', marker='o', alpha=0.4)
+    return fig
 

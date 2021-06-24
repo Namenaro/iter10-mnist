@@ -11,8 +11,7 @@ class Hypothesys:
     def check_hypothesys(self, pic, x,y):
         expected_x = x + self.dx
         expected_y = y + self.dy
-        if expected_x > 8 and expected_y>7:
-            print(0)
+
         X, Y = get_coords_less_or_eq_raduis(expected_x, expected_y, self.radius)
         temporary_hypotheses = {}
         for i in range(len(X)):
