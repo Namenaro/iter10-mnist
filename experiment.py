@@ -12,9 +12,9 @@ from A import *
 from logger import *
 
 
-def make_experiment(pic, X, Y, side, radius, checker):
-    A, hypotheses = init_A_and_all_hypos(pic, side, radius, checker, X, Y)
-    return visualise_A_and_hypos(A, hypotheses, pic)
+def make_experiment(pics, X, Y, side, radius, checker):
+    A, hypotheses = init_A_and_all_hypos(pics[0], side, radius, checker, X, Y)
+    return visualise_A_and_hypos(A, hypotheses, pics)
 
 
 def init_A_and_all_hypos(pic, side, radius, checker, X, Y):
@@ -31,15 +31,19 @@ def init_A_and_all_hypos(pic, side, radius, checker, X, Y):
     return A, hypotheses_list
 
 
-def visualise_A_and_hypos(A, hypotheses_list, pic):
-    pics = [A.apply_to_pic(pic)]
-    for i in range(len(hypotheses_list)):
-        print("hypo " + str(i) + "...")
-        new_pic = hypotheses_list[i].apply_to_all_pic(pic)
-        new_pic = new_pic + pics[i]
-        pics.append(new_pic)
+def visualise_A_and_hypos(A, hypotheses_list, etalons):
+    pics_series = []
+    for etalon in etalons:
+        seria = [A.apply_to_pic(etalon)]
 
-    fig = show_several_pics_with_one_colorbar(pics)
+        for i in range(len(hypotheses_list)):
+            print("hypo " + str(i) + "...")
+            new_pic = hypotheses_list[i].apply_to_all_pic(etalon)
+            new_pic = new_pic + seria[i]
+            seria.append(new_pic)
+        pics_series.append(seria)
+
+    fig = show_several_pics_with_one_colorbar(pics_series)
     return fig
 
 
@@ -47,28 +51,28 @@ def visualise_A_and_hypos(A, hypotheses_list, pic):
 if __name__ == "__main__":
     logger = HtmlLogger("mean")
     checker = check_mean
-    pic = etalons_of3()[0]
-    X, Y = select_coord_on_pic(pic)
-    fig =visualise_points_on_fig(pic, X,Y)
+    pics = etalons_of3()[0:4]
+    X, Y = select_coord_on_pic(pics[0])
+    fig =visualise_points_on_fig(pics[0], X,Y)
     logger.add_fig(fig)
 
-    side = 1
-    radius = 6
+    side = 2
+    radius = 0
     logger.add_text("side" + str(side) + "_radius" + str(radius))
-    fig = make_experiment(pic, X, Y, side, radius, checker)
+    fig = make_experiment(pics, X, Y, side, radius, checker)
     logger.add_fig(fig)
 
 
-    side = 1
-    radius = 4
+    side = 2
+    radius = 2
     logger.add_text("side"+str(side)+"_radius"+str(radius))
-    fig = make_experiment(pic, X, Y, side, radius, checker)
+    fig = make_experiment(pics, X, Y, side, radius, checker)
     logger.add_fig(fig)
 
-    side = 1
-    radius = 1
+    side = 2
+    radius = 3
     logger.add_text("side" + str(side) + "_radius" + str(radius))
-    fig = make_experiment(pic, X, Y, side, radius, checker)
+    fig = make_experiment(pics, X, Y, side, radius, checker)
     logger.add_fig(fig)
 
 

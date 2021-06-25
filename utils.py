@@ -47,12 +47,14 @@ def find_best_hypothesys(dict_hypotheses):
     return val, dxdy[0], dxdy[1]
 
 
-def show_several_pics_with_one_colorbar(pics):
-    rows = 2
-    fig, axs = plt.subplots(rows, len(pics))
-    MIN, MAX = np.array(pics).min(), np.array(pics).max()
-    for i in range(len(pics)):
-        im = axs[0, i].imshow(pics[i], cmap='Blues', vmin=MIN, vmax=MAX)
+def show_several_pics_with_one_colorbar(pics_series):
+    rows = len(pics_series)
+    num_pics_in_seria = len(pics_series[0])
+    fig, axs = plt.subplots(rows, num_pics_in_seria)
+    MIN, MAX = np.array(pics_series).min(), np.array(pics_series).max()
+    for row in range(rows):
+        for col in range(num_pics_in_seria):
+            im = axs[row, col].imshow(pics_series[row][col], cmap='Blues', vmin=MIN, vmax=MAX)
 
     fig.colorbar(im, ax=axs.ravel().tolist())
     return fig
