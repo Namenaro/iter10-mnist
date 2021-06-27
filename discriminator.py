@@ -1,6 +1,8 @@
 from A import *
 from hypothesys import *
 
+from scipy.stats import entropy
+
 def measure_discrim_power_of_hypo_onto_descr(pics, hypothesys, descriptor, nbins):
     Afields = []
     ABfields = []
@@ -18,4 +20,7 @@ def measure_discrim_power_of_hypo_onto_descr(pics, hypothesys, descriptor, nbins
 
 
 def measure_entropy_decrease(Afields_hist, AB_fields_hist):
-    pass
+    entropy_before = entropy(Afields_hist)
+    entropy_after = entropy(AB_fields_hist)
+    decrease = entropy_before - entropy_after # должна быть положительна и чем больше, тем лучше
+    return decrease
