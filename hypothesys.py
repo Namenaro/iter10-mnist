@@ -1,5 +1,6 @@
 from clicker import *
 from utils import *
+from A import *
 
 class Hypothesys:
     def __init__(self, descriptor, dx, dy, radius):
@@ -35,5 +36,10 @@ class Hypothesys:
                 res[centery, centerx] = alignment
         return res
 
-
+def init_hypo(side, checker, pics_for_stat, pic, x,y, parent_x, parent_y, radius):
+    descriptor = init_descriptor(pic, x, y, side, checker, pics_for_stat)
+    dx = x - parent_x
+    dy = y - parent_y
+    hypo = Hypothesys(descriptor, dx, dy, radius)
+    return hypo
 
