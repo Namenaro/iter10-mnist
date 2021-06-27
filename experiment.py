@@ -51,7 +51,9 @@ def visualise_A_and_hypos(A, hypotheses_list, etalons):
 if __name__ == "__main__":
     logger = HtmlLogger("mean")
     checker = check_mean
-    pics = etalons_of3()[0:4]
+    pic0 = etalons_of3()[0:3]
+    others = get_diverse_set_of_numbers(6)[0:4]
+    pics = np.concatenate((pic0, others), axis=0)
     X, Y = select_coord_on_pic(pics[0])
     fig =visualise_points_on_fig(pics[0], X,Y)
     logger.add_fig(fig)
