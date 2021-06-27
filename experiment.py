@@ -57,6 +57,7 @@ if __name__ == "__main__":
     X, Y = select_coord_on_pic(pics[0])
     fig =visualise_points_on_fig(pics[0], X,Y)
     logger.add_fig(fig)
+    logger.add_text(str(X)+ ", Y=" + str(Y))
 
     side = 2
     radius = 0
@@ -71,11 +72,7 @@ if __name__ == "__main__":
     fig = make_experiment(pics, X, Y, side, radius, checker)
     logger.add_fig(fig)
 
-    side = 2
-    radius = 3
-    logger.add_text("side" + str(side) + "_radius" + str(radius))
-    fig = make_experiment(pics, X, Y, side, radius, checker)
-    logger.add_fig(fig)
+
 
 
     logger.close()
