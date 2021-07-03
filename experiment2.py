@@ -6,13 +6,13 @@ from logger import *
 
 # суть эксперимента: для выбранных вручную разынх точек напечатать
 # значения их дискриминантной силы при заданном радусе/сайде
-def make_experiment(X, Y, side, radius):
+def make_experiment(X, Y, parent_x, parent_y,  side, radius):
+    #pics = get_diverse_set_of_numbers(104)[0:100]
     pics = get_numbers_of_type(3)[0:10]
     #pics = etalons_of3()
     pic = etalons_of3()[0]
     nbins = 10
-    parent_x = 5
-    parent_y = 16
+
     descriptor = get_descriptor(pic, x=parent_x, y=parent_y, side=1)
     hypotheses_list = init_hypos_const_side(pic, X,Y, side, radius, parent_x, parent_y)
     evaluations = eval_many_hypos_for_descriptor(pics, hypotheses_list, descriptor, nbins)
@@ -39,8 +39,7 @@ def visualise_evals_at_fig(X,Y,list_of_evals, pic_shape):
     num_pics = len(list_of_evals)
     cm = plt.cm.get_cmap('RdYlBu')
     max, min = np.array(list_of_evals).max(),np.array(list_of_evals).min()
-    if min>0:
-        min=0
+
     fig, ax = plt.subplots(num_pics)
     for i in range(num_pics):
         res = np.zeros(pic_shape)
@@ -57,28 +56,24 @@ if __name__ == "__main__":
     fig = visualise_points_on_fig(pic, X, Y)
     logger.add_fig(fig)
     list_of_evals=[]
+    parentX = X[0]
+    parentY = Y[0]
+    X=X[1:]
+    Y=Y[1:]
 
-    radius = 4
+    radius = 0
     logger.add_text("radius = "+ str(radius))
-    evals1 = make_experiment(X,Y, side=2, radius=radius)
+    evals1 = make_experiment(X,Y, parent_x=parentX, parent_y=parentY, side=2, radius=radius)
     logger.add_text(str(X) + ", Y=" + str(Y) )
     logger.add_text("evals: " + str(evals1))
     list_of_evals.append(evals1)
 
-    radius = 2
+    radius = 1
     logger.add_text("radius = " + str(radius))
-    evals2 = make_experiment(X, Y, side=2, radius=radius)
+    evals2 = make_experiment(X,Y, parent_x=parentX, parent_y=parentY, side=2, radius=radius)
     logger.add_text(str(X) + ", Y=" + str(Y))
     logger.add_text("evals: " + str(evals2))
     list_of_evals.append(evals2)
-
-
-    radius = 1
-    logger.add_text("radius = " + str(radius))
-    evals3 = make_experiment(X, Y, side=2, radius=radius)
-    logger.add_text(str(X) + ", Y=" + str(Y))
-    logger.add_text("evals: " + str(evals3))
-    list_of_evals.append(evals3)
 
 
     fig = visualise_evals_at_fig(X, Y, list_of_evals, pic.shape)

@@ -39,38 +39,33 @@ def visualise_A_and_hypos(A, hypotheses_list, etalons):
         for i in range(len(hypotheses_list)):
             print("hypo " + str(i) + "...")
             new_pic = hypotheses_list[i].apply_to_all_pic(etalon)
-            new_pic = new_pic + seria[i]
+            new_pic = new_pic * seria[i]
             seria.append(new_pic)
         pics_series.append(seria)
 
-    fig = show_several_pics_with_one_colorbar(pics_series)
+    fig = show_several_lines_pics_with_one_colorbar(pics_series)
     return fig
 
 
 
 if __name__ == "__main__":
-    logger = HtmlLogger("mean")
+    logger = HtmlLogger("mean1")
     checker = check_mean
-    pic0 = etalons_of3()[0:3]
+    pic0 = etalons_of3()[0:7]
     others = get_diverse_set_of_numbers(6)[0:4]
     pics = np.concatenate((pic0, others), axis=0)
     X, Y = select_coord_on_pic(pics[0])
     fig =visualise_points_on_fig(pics[0], X,Y)
     logger.add_fig(fig)
-    logger.add_text(str(X)+ ", Y=" + str(Y))
+    logger.add_text("X="+ str(X))
+    logger.add_text("Y=" + str(Y))
 
     side = 2
-    radius = 0
+    radius = 2
     logger.add_text("side" + str(side) + "_radius" + str(radius))
     fig = make_experiment(pics, X, Y, side, radius, checker)
     logger.add_fig(fig)
 
-
-    side = 2
-    radius = 2
-    logger.add_text("side"+str(side)+"_radius"+str(radius))
-    fig = make_experiment(pics, X, Y, side, radius, checker)
-    logger.add_fig(fig)
 
 
 

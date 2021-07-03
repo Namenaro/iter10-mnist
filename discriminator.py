@@ -9,7 +9,7 @@ def get_probabilities_digitized(activations_list, max, nbins):
     activations = np.array(activations_list)
     (probs, bins, _) = plt.hist(activations, bins=nbins,
                                 weights=np.ones_like(activations) / len(activations), range=(0, max))
-    #plt.show()
+    plt.show()
     return probs
 
 
@@ -19,11 +19,11 @@ def measure_discrim_power_of_hypo_onto_descr(pics, hypothesys, descriptor, nbins
     for pic in pics:
         Afield = descriptor.apply_to_pic(pic)
         Bfield = hypothesys.apply_to_all_pic(pic)
-        ABfield = Afield+Bfield
+        ABfield = Afield * Bfield
         Afields = Afields + Afield.flatten().tolist()
         ABfields = ABfields + ABfield.flatten().tolist()
     Afields_hist = get_probabilities_digitized(Afields, 1, nbins)
-    AB_fields_hist = get_probabilities_digitized(ABfields, 2, nbins)
+    AB_fields_hist = get_probabilities_digitized(ABfields, 1, nbins)
     discrim_power = measure_discrim_power(Afields_hist, AB_fields_hist)
     return discrim_power
 
@@ -38,7 +38,7 @@ def measure_discrim_power(Afields_hist, AB_fields_hist):
         after = AB_fields_hist[i]
         increase = before - after
         sum+=increase * w
-        w=w/2
+        w=w/1.5
 
     return sum
 
